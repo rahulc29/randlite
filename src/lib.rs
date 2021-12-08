@@ -43,10 +43,22 @@ mod tests {
             let b = self.gen_u32();
             assert_ne!(a, b);
         }
+        // this test has a failure probability of 2 ** (-32)
+        fn test_gen_f32(&mut self) {
+            let a = self.gen_f32();
+            let b = self.gen_f32();
+            assert_ne!(a, b);
+        }
         // this test has a failure probability of 2 ** (-64)
         fn test_gen_u64(&mut self) {
             let a = self.gen_u64();
             let b = self.gen_u64();
+            assert_ne!(a, b);
+        }
+        // this test has a failure probability of 2 ** (-64)
+        fn test_gen_f64(&mut self) {
+            let a = self.gen_f64();
+            let b = self.gen_f64();
             assert_ne!(a, b);
         }
     }
@@ -73,5 +85,21 @@ mod tests {
         let mut bsd = bsd_generator();
         microsoft.test_gen_u64();
         bsd.test_gen_u64();
+    }
+
+    #[test]
+    fn lcg_gen_f32() {
+        let mut microsoft = microsoft_generator();
+        let mut bsd = bsd_generator();
+        microsoft.test_gen_f32();
+        bsd.test_gen_f32();
+    }
+
+    #[test]
+    fn lcg_gen_f64() {
+        let mut microsoft = microsoft_generator();
+        let mut bsd = bsd_generator();
+        microsoft.test_gen_f64();
+        bsd.test_gen_f64();
     }
 }
