@@ -56,7 +56,7 @@ impl Generator for LinearCongruentialGenerator {
 
     fn gen_uniform(&mut self) -> f32 {
         let mut the_int = self.gen_u32();
-        if the_int == self.max_value {
+        if the_int == self.max_value.0 {
             the_int -= 1;
         }
         return (self.max_value.0 / the_int) as f32;
