@@ -1,5 +1,4 @@
 use crate::generator::Generator;
-use crate::seed_factory::SeedFactory;
 
 struct LinearCongruentialGenerator {
     a: u32,
@@ -11,7 +10,7 @@ struct LinearCongruentialGenerator {
 
 impl LinearCongruentialGenerator {
     fn next(&mut self) -> u32 {
-        let next = (a * self.current + c) % modulo;
+        let mut next = (self.a * self.current + self.c) % self.modulo;
         next = next & self.max_value;
         self.current = next;
         next
@@ -54,20 +53,18 @@ impl Generator for LinearCongruentialGenerator {
     }
 }
 
-static SEED_FACTORY: Box<dyn SeedFactory> = SeedFactory::default();
-
-pub static BSD_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
-    a: 1103515245,
-    c: 12345,
-    modulo: (1 << 31),
-    current: SEED_FACTORY.create_seed(),
-    max_value: !1u32,
-};
-
-pub static MICROSOFT_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
-    a: 214013,
-    c: 2531011,
-    modulo: (1 << 31),
-    current: SEED_FACTORY.create_seed(),
-    max_value: !1u32,
-};
+// pub static BSD_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
+//     a: 1103515245,
+//     c: 12345,
+//     modulo: (1 << 31),
+//     current: default_factory().create_seed(),
+//     max_value: !1u32,
+// };
+//
+// pub static MICROSOFT_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
+//     a: 214013,
+//     c: 2531011,
+//     modulo: (1 << 31),
+//     current: default_factory().create_seed(),
+//     max_value: !1u32,
+// };

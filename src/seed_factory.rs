@@ -1,16 +1,11 @@
-use std::time::{Instant, SystemTime, UNIX_EPOCH};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub trait SeedFactory {
     fn create_seed(&self) -> u32;
 }
 
-impl dyn SeedFactory {
-    // I'm not sure if `Box`ing this way is the idiomatic way
-    // But for the moment : I'll just go along with it
-    // Will refactor in the future
-    pub fn default() -> Box<dyn SeedFactory> {
-        Box::new(OSSeedFactory {})
-    }
+pub fn default_factory() -> Box<dyn SeedFactory> {
+    Box::new(OSSeedFactory {})
 }
 
 struct OSSeedFactory;
