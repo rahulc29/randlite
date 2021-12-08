@@ -13,6 +13,11 @@ struct OSSeedFactory;
 impl SeedFactory for OSSeedFactory {
     fn create_seed(&self) -> u32 {
         let now = SystemTime::now();
-        now.duration_since(UNIX_EPOCH).expect("Error retrieving system time").as_micros() as u32
+        let nanos = now
+            .duration_since(UNIX_EPOCH)
+            .expect("Error retrieving system time")
+            .as_nanos();
+        let to_return = (nanos & (!0u32 as u128)) as u32;
+        return to_return;
     }
 }
