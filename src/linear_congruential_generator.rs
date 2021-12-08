@@ -1,4 +1,5 @@
 use crate::generator::Generator;
+use crate::seed_factory::default_factory;
 
 struct LinearCongruentialGenerator {
     a: u32,
@@ -53,18 +54,22 @@ impl Generator for LinearCongruentialGenerator {
     }
 }
 
-// pub static BSD_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
-//     a: 1103515245,
-//     c: 12345,
-//     modulo: (1 << 31),
-//     current: default_factory().create_seed(),
-//     max_value: !1u32,
-// };
-//
-// pub static MICROSOFT_GENERATOR: LinearCongruentialGenerator = LinearCongruentialGenerator {
-//     a: 214013,
-//     c: 2531011,
-//     modulo: (1 << 31),
-//     current: default_factory().create_seed(),
-//     max_value: !1u32,
-// };
+pub fn bsd_generator() -> Box<dyn Generator> {
+    Box::new(LinearCongruentialGenerator {
+        a: 1103515245,
+        c: 12345,
+        modulo: (1 << 31),
+        current: default_factory().create_seed(),
+        max_value: !1u32,
+    })
+}
+
+pub fn microsoft_generator() -> Box<dyn Generator> {
+    Box::new(LinearCongruentialGenerator {
+        a: 214013,
+        c: 2531011,
+        modulo: (1 << 31),
+        current: default_factory().create_seed(),
+        max_value: !1u32,
+    })
+}
