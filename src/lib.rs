@@ -22,12 +22,10 @@ mod tests {
     #[test]
     fn generate_seeds_instantly() {
         let factory = seed_factory::default_factory();
+        // with nanoseconds the time difference b/w the two invocations is captured
+        // thereby yielding different seeds for every invocation
         let seed_a = factory.create_seed();
         let seed_b = factory.create_seed();
-        // since microseconds come with their own uncertainty
-        // and we are using microseconds for seeding
-        // we expect nearly instantaneous calls to `create_seed()`
-        // to produce the same seed
-        assert_eq!(seed_a, seed_b);
+        assert_ne!(seed_a, seed_b);
     }
 }
