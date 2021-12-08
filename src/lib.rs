@@ -37,6 +37,18 @@ mod tests {
             assert!(uniform < 1f32);
             assert!(uniform >= 0f32);
         }
+        // this test has a failure probability of 2 ** (-32)
+        fn test_gen_u32(&mut self) {
+            let a = self.gen_u32();
+            let b = self.gen_u32();
+            assert_ne!(a, b);
+        }
+        // this test has a failure probability of 2 ** (-64)
+        fn test_gen_u64(&mut self) {
+            let a = self.gen_u64();
+            let b = self.gen_u64();
+            assert_ne!(a, b);
+        }
     }
 
     #[test]
@@ -45,5 +57,21 @@ mod tests {
         microsoft.test_gen_uniform();
         let mut bsd = bsd_generator();
         bsd.test_gen_uniform();
+    }
+
+    #[test]
+    fn lcg_gen_u32() {
+        let mut microsoft = microsoft_generator();
+        let mut bsd = bsd_generator();
+        microsoft.test_gen_u32();
+        bsd.test_gen_u32();
+    }
+
+    #[test]
+    fn lcg_gen_u64() {
+        let mut microsoft = microsoft_generator();
+        let mut bsd = bsd_generator();
+        microsoft.test_gen_u64();
+        bsd.test_gen_u64();
     }
 }
