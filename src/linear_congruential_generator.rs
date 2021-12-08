@@ -21,7 +21,7 @@ impl LinearCongruentialGenerator {
 
 impl Generator for LinearCongruentialGenerator {
     fn gen_bool(&mut self) -> bool {
-        return self.gen_f32() > 0.5;
+        return self.gen_uniform() > 0.5;
     }
 
     fn gen_u32(&mut self) -> u32 {
@@ -52,6 +52,14 @@ impl Generator for LinearCongruentialGenerator {
             let f64_ptr = ptr as *const f64;
             return *f64_ptr;
         };
+    }
+
+    fn gen_uniform(&mut self) -> f32 {
+        let mut the_int = self.gen_u32();
+        if the_int == self.max_value {
+            the_int -= 1;
+        }
+        return (self.max_value / the_int) as f32;
     }
 }
 
