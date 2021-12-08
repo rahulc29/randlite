@@ -59,7 +59,7 @@ impl Generator for LinearCongruentialGenerator {
         if the_int == self.max_value.0 {
             the_int -= 1;
         }
-        return (self.max_value.0 / the_int) as f32;
+        return the_int as f32 / self.max_value.0 as f32;
     }
 }
 
