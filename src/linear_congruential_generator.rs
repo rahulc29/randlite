@@ -1,12 +1,13 @@
 use crate::generator::Generator;
 use crate::seed_factory::default_factory;
+use std::num::Wrapping;
 
 struct LinearCongruentialGenerator {
-    a: u32,
-    c: u32,
-    modulo: u32,
-    current: u32,
-    max_value: u32,
+    a: Wrapping<u32>,
+    c: Wrapping<u32>,
+    modulo: Wrapping<u32>,
+    current: Wrapping<u32>,
+    max_value: Wrapping<u32>,
 }
 
 impl LinearCongruentialGenerator {
@@ -14,7 +15,7 @@ impl LinearCongruentialGenerator {
         let mut next = (self.a * self.current + self.c) % self.modulo;
         next = next & self.max_value;
         self.current = next;
-        next
+        next.0
     }
 }
 
@@ -56,20 +57,20 @@ impl Generator for LinearCongruentialGenerator {
 
 pub fn bsd_generator() -> Box<dyn Generator> {
     Box::new(LinearCongruentialGenerator {
-        a: 1103515245,
-        c: 12345,
-        modulo: (1 << 31),
-        current: default_factory().create_seed(),
-        max_value: !1u32,
+        a: Wrapping(1103515245),
+        c: Wrapping(12345),
+        modulo: Wrapping(1 << 31),
+        current: Wrapping(default_factory().create_seed()),
+        max_value: Wrapping(!1u32),
     })
 }
 
 pub fn microsoft_generator() -> Box<dyn Generator> {
     Box::new(LinearCongruentialGenerator {
-        a: 214013,
-        c: 2531011,
-        modulo: (1 << 31),
-        current: default_factory().create_seed(),
-        max_value: !1u32,
+        a: Wrapping(214013),
+        c: Wrapping(2531011),
+        modulo: Wrapping(1 << 31),
+        current: Wrapping(default_factory().create_seed()),
+        max_value: Wrapping(!1u32),
     })
 }
