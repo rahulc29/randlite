@@ -2,15 +2,18 @@ mod generator;
 mod linear_congruential_generator;
 mod seed_factory;
 mod mt_generator;
+mod acorn_generator;
 
 #[cfg(test)]
 mod tests {
     use std::thread;
     use std::time::Duration;
+    use crate::acorn_generator::AcornGenerator;
     use crate::generator::Generator;
     use crate::linear_congruential_generator::{bsd_generator, microsoft_generator};
     use crate::mt_generator::{mt_generator, MTGenerator};
     use crate::seed_factory;
+    use crate::seed_factory::default_factory;
 
     #[test]
     fn generate_seed() {
@@ -131,6 +134,36 @@ mod tests {
 
     #[test]
     fn mt_gen_f64() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_f64();
+    }
+
+    #[test]
+    fn acorn_gen_uniform() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_uniform();
+    }
+
+    #[test]
+    fn acorn_gen_u32() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_u32();
+    }
+
+    #[test]
+    fn acorn_gen_f32() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_f32();
+    }
+
+    #[test]
+    fn acorn_gen_u64() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_u64();
+    }
+
+    #[test]
+    fn acorn_gen_f64() {
         let mut mt: Box<dyn Generator> = mt_generator();
         mt.test_gen_f64();
     }
