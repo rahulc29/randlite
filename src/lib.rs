@@ -1,6 +1,7 @@
 mod generator;
 mod linear_congruential_generator;
 mod seed_factory;
+mod mt_generator;
 
 #[cfg(test)]
 mod tests {
@@ -8,6 +9,7 @@ mod tests {
     use std::time::Duration;
     use crate::generator::Generator;
     use crate::linear_congruential_generator::{bsd_generator, microsoft_generator};
+    use crate::mt_generator::{mt_generator, MTGenerator};
     use crate::seed_factory;
 
     #[test]
@@ -101,5 +103,35 @@ mod tests {
         let mut bsd = bsd_generator();
         microsoft.test_gen_f64();
         bsd.test_gen_f64();
+    }
+
+    #[test]
+    fn mt_gen_uniform() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_uniform();
+    }
+
+    #[test]
+    fn mt_gen_u32() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_u32();
+    }
+
+    #[test]
+    fn mt_gen_f32() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_f32();
+    }
+
+    #[test]
+    fn mt_gen_u64() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_u64();
+    }
+
+    #[test]
+    fn mt_gen_f64() {
+        let mut mt: Box<dyn Generator> = mt_generator();
+        mt.test_gen_f64();
     }
 }
